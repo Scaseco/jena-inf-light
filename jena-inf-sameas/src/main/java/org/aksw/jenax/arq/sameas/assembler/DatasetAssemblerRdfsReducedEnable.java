@@ -17,12 +17,12 @@ import org.apache.jena.sparql.core.assembler.DatasetAssembler;
 
 /**
  * An assembler that enables the use of the service
- * plugins SERVICE <sameAs:> {}, SERVICE <rdfs:> {} and SERVICE <sameAs+rdfs> {}.
+ * plugins {@code SERVICE <sameAs:> {}}, {@code SERVICE <rdfs:> {}} and {@code SERVICE <sameAs+rdfs> {}}.
  * This assembler only registers the specified RDFS setup in the dataset context such that the
  * plugins can pick it up.
  *
  * In other words, this assembler only sets a context attribute in the base dataset and returns it.
- * [] ja:context [ ja:cxtName "rdfsSetupNode" ;  ja:cxtValue [ a :RDFSSetup ; ja:rdfsSchema "rdfs.ttl" ] ] ;
+ * [] ja:context [ ja:cxtName "rdfsSetupNode" ; ja:cxtValue [ a :RDFSSetup ; ja:rdfsSchema "rdfs.ttl" ] ] ;
  */
 public class DatasetAssemblerRdfsReducedEnable extends DatasetAssembler {
 

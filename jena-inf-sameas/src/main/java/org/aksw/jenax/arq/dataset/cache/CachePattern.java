@@ -36,7 +36,7 @@ public class CachePattern {
     /** The specified pattern - may make use of IN */
     protected Quad specPattern;
 
-    /** The pattern to retrieve all matching quads - effectively all IN's are substitude with Node.ANY */
+    /** The pattern to retrieve all matching quads - effectively all IN's are substituted with Node.ANY */
     protected Quad findPattern;
 
     /** The indices of the INs in the spec pattern */
@@ -80,7 +80,7 @@ public class CachePattern {
      * <ul>
      *   <li>All inputs must be concrete</li>
      *   <li>Node.ANY only matches Node.ANY (rather than matching everything)</li>
-     * <ul>
+     * </ul>
      */
     public boolean matchesPattern(Node mg, Node ms, Node mp, Node mo) {
         return matchesPattern(new Node[] { mg, ms, mp, mo }, (arr, i) -> arr[i]);
