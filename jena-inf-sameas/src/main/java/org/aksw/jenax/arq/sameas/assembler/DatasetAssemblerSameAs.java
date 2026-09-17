@@ -21,22 +21,6 @@ import org.apache.jena.vocabulary.OWL2;
 public class DatasetAssemblerSameAs
     extends DatasetAssembler
 {
-//  @Iri(SameAsTerms.baseDataset)
-//  Resource getBaseDataset();
-//  void setBaseDataset(Resource baseDataset);
-//
-//  @Iri(SameAsTerms.NS + "predicate")
-//  Set<Node> getPredicates();
-//
-//  @Iri(SameAsTerms.NS + "cacheSize")
-//  Integer getCacheSize();
-//  SameAsConfig setCacheSize(Integer value);
-//
-//  @Iri(SameAsTerms.NS + "allowDuplicates")
-//  Boolean getAllowDuplicates();
-//  SameAsConfig setAllowDuplicates(Boolean value);
-
-
     @Override
     public DatasetGraph createDataset(Assembler a, Resource root) {
         Resource baseDatasetRes = root.getPropertyResourceValue(DatasetAssemblerVocab.pDataset);
@@ -46,7 +30,7 @@ public class DatasetAssemblerSameAs
         int cacheSizeMax = Optional.ofNullable(root.getProperty(SameAsVocab.cacheSize)).map(Statement::getInt).orElse(0);
         boolean allowDuplicates = Optional.ofNullable(root.getProperty(SameAsVocab.allowDuplicates)).map(Statement::getBoolean).orElse(false);
 
-        Set<Node> predicates = root.listProperties(SameAsVocab.predicates).mapWith(Statement::getResource).mapWith(Resource::asNode).toSet();
+        Set<Node> predicates = root.listProperties(SameAsVocab.predicate).mapWith(Statement::getResource).mapWith(Resource::asNode).toSet();
         if (predicates.isEmpty()) {
             predicates.add(OWL2.sameAs.asNode());
         }

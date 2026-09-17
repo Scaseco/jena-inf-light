@@ -268,16 +268,16 @@ public class TestDatasetAssemblerSameAs {
             PREFIX owl: <http://www.w3.org/2002/07/owl#>
             PREFIX ji: <https://w3id.org/aksw/jena/inf#>
 
-            <urn:example:root>
-              a ji:DatasetSameAs ;
-              ji:allowDuplicates false ;
-              ji:cacheMaxSize -1 ;
-              ji:predicate owl:sameAs ;
-              ja:dataset [
-                a ji:DatasetAutoUnionDefaultGraph ;
-                ja:dataset <urn:example:base> ;
-              ] ;
-              .
+             <urn:example:root>
+               a ji:DatasetSameAs ;
+               ji:allowDuplicates false ;
+               ji:cacheMaxSize -1 ;
+               ji:predicate owl:sameAs ;
+               ja:dataset [
+                 a <http://jenax.aksw.org/plugin#DatasetAutoUnionDefaultGraph> ;
+                 ja:dataset <urn:example:base> ;
+               ] ;
+               .
 
             <urn:example:base>
               a tdb2:DatasetTDB2 ;
