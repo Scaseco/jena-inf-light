@@ -273,6 +273,7 @@
 				<version>${maven-javadoc-plugin.version}</version>
 				<configuration>
 					<failOnError>false</failOnError>
+					<additionalJOption>-Xdoclint:all,-missing</additionalJOption>
 				</configuration>
 				<executions>
 					<execution>
