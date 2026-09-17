@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>jena-inf-sameas</artifactId>
+	<name>jena-inf-sameas</name>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.aksw.jena.inf</groupId>
+		<artifactId>jena-inf-parent</artifactId>
+		<version>0.9.0-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+
+		<!--
+		<dependency>
+			<groupId>org.aksw.jenax</groupId>
+			<artifactId>jenax-arq-utils</artifactId>
+		</dependency>
+-->
+		<!--
+		<dependency>
+			<groupId>org.aksw.jenax</groupId>
+			<artifactId>jenax-reprogen-core</artifactId>
+		</dependency>
+-->
+
+		<!--
+		<dependency>
+			<groupId>org.aksw.jenax</groupId>
+			<artifactId>jenax-arq-plugins-datatypes</artifactId>
+		</dependency>
+-->
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-arq</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-tdb2</artifactId>
+			<!-- 			<version>${project.version}</version> -->
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Unit Testing -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j2-impl</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!--		<dependency>-->
+		<!--			<groupId>org.slf4j</groupId>-->
+		<!--			<artifactId>slf4j-log4j12</artifactId>-->
+		<!--<version>2.0.17</version>-->
+		<!--			<scope>test</scope>-->
+		<!--		</dependency>-->
+
+		<!--
+		<dependency>
+			<groupId>org.aksw.jenax</groupId>
+			<artifactId>jenax-resources-test-config</artifactId>
+			<scope>test</scope>
+		</dependency>
+-->
+	</dependencies>
+</project>
