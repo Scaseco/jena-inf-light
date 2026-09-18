@@ -3,22 +3,22 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.aksw.jena.proxy</groupId>
-    <artifactId>jena-proxy-parent</artifactId>
-    <version>0.7.1-SNAPSHOT</version>
+    <groupId>org.aksw.jena.inf</groupId>
+    <artifactId>jena-inf-parent</artifactId>
+    <version>0.9.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>jena-proxy-pkg-fuseki-plugin</artifactId>
-  <name>Jena Proxy - Fuseki Plugin JAR</name>
+  <artifactId>jena-inf-pkg-fuseki-plugin</artifactId>
+  <name>Jena Inf - Fuseki Plugin JAR</name>
 
   <properties>
-    <outputBaseName>jena-proxy-fuseki-plugin-${project.version}</outputBaseName>
+    <outputBaseName>jena-inf-fuseki-plugin-${project.version}</outputBaseName>
   </properties>
 
   <dependencies>
     <dependency>
-      <groupId>org.aksw.jena.proxy</groupId>
-      <artifactId>jena-proxy-dataset-rdflink</artifactId>
+      <groupId>org.aksw.jena.inf</groupId>
+      <artifactId>jena-inf-sameas</artifactId>
     </dependency>
 
     <dependency>
@@ -75,8 +75,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <windowtitle>Jena ExecTracker - Fuseki Mod</windowtitle>
-          <doctitle>Jena ExecTracker - Fuseki Mod ${project.version}</doctitle>
+          <windowtitle>Jena Inf - Fuseki Plugin</windowtitle>
+          <doctitle>Jena Inf - Fuseki Plugin ${project.version}</doctitle>
         </configuration>
       </plugin>
 
@@ -118,9 +118,9 @@
           <scope>provided</scope>
         </dependency>
       </dependencies>
-      <build>  
+      <build>
         <plugins>
-          <!-- jar file produced with this configuration gets intensionally overwritten by the shade plugin -->
+          <!-- jar file produced with this configuration gets intentionally overwritten by the shade plugin -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jar-plugin</artifactId>

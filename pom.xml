@@ -8,12 +8,12 @@
 	<version>0.9.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Jena Inferencer SameAs- Parent</name>
+	<name>Jena Inf - Parent</name>
 	<description>SameAs Inferencer for Apache Jena - ARQ and Fuseki</description>
 
-	<url>https://github.com/Scaseco/jena-exectracker</url>
+	<url>https://github.com/Scaseco/jena-inf</url>
 	<issueManagement>
-		<url>https://github.com/Scaseco/jena-exectracker/issues</url>
+		<url>https://github.com/Scaseco/jena-inf/issues</url>
 		<system>GitHub</system>
 	</issueManagement>
 	<licenses>
@@ -24,10 +24,10 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>https://github.com/Scaseco/jena-exectracker</url>
-		<connection>scm:git:git://github.com/Scaseco/jena-exectracker.git</connection>
+		<url>https://github.com/Scaseco/jena-inf</url>
+		<connection>scm:git:git://github.com/Scaseco/jena-inf.git</connection>
 		<developerConnection>
-			scm:git:git@github.com:Scaseco/jena-exectracker.git</developerConnection>
+			scm:git:git@github.com:Scaseco/jena-inf.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 	<developers>
@@ -40,10 +40,8 @@
 	</developers>
 	<modules>
 		<module>jena-inf-sameas</module>
-		<!--
-		<module>jena-inf-sameas-fuseki-mod</module>
-		<module>jena-inf-sameas-pkg-fuseki-plugin</module>
--->
+		<module>jena-inf-bom</module>
+		<module>jena-inf-pkg-fuseki-plugin</module>
 	</modules>
 	<properties>
 		<jena.version>6.2.0</jena.version>
@@ -139,14 +137,8 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.aksw.jena.exectracker</groupId>
-				<artifactId>jena-exectracker-arq</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.aksw.jena.exectracker</groupId>
-				<artifactId>jena-exectracker-fuseki-mod</artifactId>
+				<groupId>org.aksw.jena.inf</groupId>
+				<artifactId>jena-inf-sameas</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

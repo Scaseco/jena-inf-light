@@ -4,27 +4,24 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>jena-proxy-bom</artifactId>
-	<name>Jena Proxy - Bill of Materials</name>
-	<description>Bill of Materials (BOM) for the Jena Proxy project.</description>
+	<artifactId>jena-inf-bom</artifactId>
+	<name>Jena Inf - Bill of Materials</name>
+	<description>Bill of Materials (BOM) for the Jena Inf (SameAs Inferencer) project.</description>
 	<packaging>pom</packaging>
 
 	<parent>
-		<groupId>org.aksw.jena.proxy</groupId>
-		<artifactId>jena-proxy-parent</artifactId>
-		<version>0.7.1-SNAPSHOT</version>
+		<groupId>org.aksw.jena.inf</groupId>
+		<artifactId>jena-inf-parent</artifactId>
+		<version>0.9.0-SNAPSHOT</version>
 	</parent>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.aksw.jena.proxy</groupId>
-			<artifactId>jena-proxy-dataset-sparql</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.aksw.jena.proxy</groupId>
-			<artifactId>jena-proxy-dataset-rdflink</artifactId>
-		</dependency>
-	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aksw.jena.inf</groupId>
+				<artifactId>jena-inf-sameas</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
-
