@@ -1,10 +1,8 @@
-package org.aksw.jenax.arq.sameas.init;
+package org.aksw.jena.inf.util;
 
 import java.util.Map;
 import java.util.Set;
 
-import org.aksw.jena.inf.util.DynamicDatasetUtils;
-import org.aksw.jena.inf.util.VarScopeUtils;
 import org.apache.jena.atlas.lib.Pair;
 import org.apache.jena.query.Query;
 import org.apache.jena.sparql.algebra.Op;
@@ -39,7 +37,7 @@ public class QueryExecUtils {
 	        // Set up the map that allows for mapping the query's result set variables's
 	        // to the appropriately scoped ones
 	        Set<Var> visibleVars = OpVars.visibleVars(op);
-	        Map<Var, Var> normedToScoped = VarScopeUtils.normalizeVarScopes(visibleVars).inverse();
+	        Map<Var, Var> normedToScoped = VarScopeUtils.normalizeVarScopes(visibleVars).inverseBidiMap();
 
 	        Op opRestored = Rename.reverseVarRename(op, true);
 	        Query baseQuery = OpAsQuery.asQuery(opRestored);

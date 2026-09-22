@@ -1,4 +1,4 @@
-package org.aksw.jenax.arq.sameas.assembler;
+package org.aksw.jena.inf.sameas.assembler;
 
 public class SameAsTerms {
     public static final String NS = "https://w3id.org/aksw/jena/inf#";

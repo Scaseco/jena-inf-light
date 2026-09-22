@@ -1,4 +1,4 @@
-package org.aksw.jenax.arq.uniondefaultgraph.assembler;
+package org.aksw.jena.inf.uniondefaultgraph;
 
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;

@@ -1,7 +1,8 @@
-package org.aksw.jenax.arq.sameas.assembler;
+package org.aksw.jena.inf.rdfs.assembler;
 
 import static org.apache.jena.sparql.util.graph.GraphUtils.getAsStringValue;
 
+import org.aksw.jena.inf.sameas.assembler.SameAsTerms;
 import org.apache.jena.assembler.Assembler;
 import org.apache.jena.assembler.exceptions.AssemblerException;
 import org.apache.jena.graph.Graph;

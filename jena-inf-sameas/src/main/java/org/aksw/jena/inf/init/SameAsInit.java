@@ -1,18 +1,19 @@
-package org.aksw.jenax.arq.sameas.init;
+package org.aksw.jena.inf.init;
 
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.aksw.jena.inf.rdfs.DatasetGraphRDFSReduced;
+import org.aksw.jena.inf.rdfs.assembler.DatasetAssemblerRdfsReduced;
+import org.aksw.jena.inf.rdfs.assembler.DatasetAssemblerRdfsReducedEnable;
 import org.aksw.jena.inf.sameas.DatasetGraphSameAs;
-import org.aksw.jenax.arq.sameas.assembler.DatasetAssemblerRdfsReduced;
-import org.aksw.jenax.arq.sameas.assembler.DatasetAssemblerRdfsReducedEnable;
-import org.aksw.jenax.arq.sameas.assembler.DatasetAssemblerSameAs;
-import org.aksw.jenax.arq.sameas.assembler.SameAsVocab;
-import org.aksw.jenax.arq.uniondefaultgraph.assembler.DatasetAssemblerUnionDefaultGraph;
-import org.aksw.jenax.arq.uniondefaultgraph.assembler.DatasetGraphUnionDefaultGraph;
-import org.aksw.jenax.arq.uniondefaultgraph.assembler.UnionDefaultGraphVocab;
+import org.aksw.jena.inf.sameas.assembler.DatasetAssemblerSameAs;
+import org.aksw.jena.inf.sameas.assembler.SameAsVocab;
+import org.aksw.jena.inf.uniondefaultgraph.DatasetGraphUnionDefaultGraph;
+import org.aksw.jena.inf.uniondefaultgraph.UnionDefaultGraphVocab;
+import org.aksw.jena.inf.uniondefaultgraph.assembler.DatasetAssemblerUnionDefaultGraph;
+import org.aksw.jena.inf.util.QueryExecUtils;
 import org.apache.jena.assembler.Assembler;
 import org.apache.jena.assembler.assemblers.AssemblerGroup;
 import org.apache.jena.graph.Node;

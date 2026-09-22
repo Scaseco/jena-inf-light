@@ -1,4 +1,4 @@
-package org.aksw.jenax.arq.uniondefaultgraph.assembler;
+package org.aksw.jena.inf.uniondefaultgraph;
 
 import java.util.Collections;
 import java.util.Iterator;

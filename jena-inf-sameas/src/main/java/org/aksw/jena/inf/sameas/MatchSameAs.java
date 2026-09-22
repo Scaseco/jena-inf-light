@@ -11,16 +11,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.aksw.jena.inf.util.CacheUtils;
-import org.aksw.jena.inf.util.IterUtils;
-import org.aksw.jena.inf.util.SparqlCxt;
+import org.aksw.jena.inf.util.IteratorDepthFirstPreOrder;
 import org.apache.jena.atlas.iterator.Iter;
+import org.apache.jena.graph.Node;
 import org.apache.jena.rdfs.engine.MapperX;
 import org.apache.jena.rdfs.engine.Match;
 import org.apache.jena.rdfs.engine.MatchWrapper;
+import org.apache.jena.sparql.util.NodeCmp;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.google.common.graph.Traverser;
 
 public class MatchSameAs<C, D>
 	extends MatchWrapper<C, D, Match<C, D>>
@@ -30,7 +30,6 @@ public class MatchSameAs<C, D>
     /** Allowing duplicates disables 'contains' checks for inferred triples which may increase performance */
     protected boolean allowDuplicates;
 
-    protected SparqlCxt<C> sparqlCxt;
     protected Set<C> sameAsPredicates;
 
     /** If true then drop <b>inferred</b> (x sameAs x) triples. Does not drop physical triples. */
@@ -48,25 +47,24 @@ public class MatchSameAs<C, D>
         return new Worker(s, p, o).find();
 	}
 
-    public static <C, D> Match<C, D> wrap(Match<C, D> base, SparqlCxt<C> sparqlCxt, C sameAsPredicate) {
-        return wrap(base, sparqlCxt, Collections.singleton(sameAsPredicate), false);
+    public static <C, D> Match<C, D> wrap(Match<C, D> base, C sameAsPredicate) {
+        return wrap(base, Collections.singleton(sameAsPredicate), false);
     }
 
-    public static <C, D> Match<C, D> wrap(Match<C, D> base, SparqlCxt<C> sparqlCxt, Set<C> sameAsPredicates) {
-        return wrap(base, sparqlCxt, sameAsPredicates, false);
+    public static <C, D> Match<C, D> wrap(Match<C, D> base, Set<C> sameAsPredicates) {
+        return wrap(base, sameAsPredicates, false);
     }
 
-    public static <C, D> Match<C, D> wrap(Match<C, D> base, SparqlCxt<C> sparqlCxt, Set<C> sameAsPredicates, boolean allowDuplicates) {
-        return wrap(base, sparqlCxt, sameAsPredicates, allowDuplicates, null);
+    public static <C, D> Match<C, D> wrap(Match<C, D> base, Set<C> sameAsPredicates, boolean allowDuplicates) {
+        return wrap(base, sameAsPredicates, allowDuplicates, null);
     }
 
-    public static <C, D> Match<C, D> wrap(Match<C, D> base, SparqlCxt<C> sparqlCxt, Set<C> sameAsPredicates, boolean allowDuplicates, Predicate<C> mayHaveSameAsLinks) {
-        return new MatchSameAs<>(base, sparqlCxt, sameAsPredicates, allowDuplicates, mayHaveSameAsLinks);
+    public static <C, D> Match<C, D> wrap(Match<C, D> base, Set<C> sameAsPredicates, boolean allowDuplicates, Predicate<C> mayHaveSameAsLinks) {
+        return new MatchSameAs<>(base, sameAsPredicates, allowDuplicates, mayHaveSameAsLinks);
     }
 
-    protected MatchSameAs(Match<C, D> base, SparqlCxt<C> sparqlCxt, Set<C> sameAsPredicates, boolean allowDuplicates, Predicate<C> mayHaveSameAsLinks) {
+    protected MatchSameAs(Match<C, D> base, Set<C> sameAsPredicates, boolean allowDuplicates, Predicate<C> mayHaveSameAsLinks) {
         super(base);
-        this.sparqlCxt = sparqlCxt;
         this.sameAsPredicates = sameAsPredicates;
         this.mayHaveSameAsLinks = mayHaveSameAsLinks;
         this.allowDuplicates = allowDuplicates;
@@ -105,7 +103,7 @@ public class MatchSameAs<C, D>
             Iterator<D> result =
                 Iter.iter(initialSubjects).flatMap(s ->
                     Iter.iter(initialObjects).flatMap(o ->
-                        IterUtils.iter(getDelegate().match(s, mp, o))
+                        iter(getDelegate().match(s, mp, o))
                             .flatMap(t -> streamInferencesOnLeastQuad(t))
                     ));
 
@@ -151,8 +149,8 @@ public class MatchSameAs<C, D>
                 }
                 // If there were concrete subjects/objects for matching then restrict the cross-join
                 // only to those
-                List<C> ss = sparqlCxt.isConcrete(ms) ? Collections.singletonList(ms) : sortedSubjects;
-                List<C> oo = sparqlCxt.isConcrete(mo) ? Collections.singletonList(mo) : sortedObjects;
+                List<C> ss = isConcrete(ms) ? Collections.singletonList(ms) : sortedSubjects;
+                List<C> oo = isConcrete(mo) ? Collections.singletonList(mo) : sortedObjects;
 
                 // System.out.println(quad + (isLeastQuad ? " is least quad " : " hasLeastQuad: " + leastQuad));
                 result = isLeastQuad
@@ -170,7 +168,7 @@ public class MatchSameAs<C, D>
 
         private List<C> resolveSameAsSortedCached(C start) {
             List<C> result;
-            if (!sparqlCxt.isConcrete(start) || sparqlCxt.isLiteral(start)) {
+            if (!isConcrete(start) || isLiteral(start)) {
                 result = Collections.singletonList(start);
             } else {
                 // Entry<C, C> startKey = Map.entry(g, start);
@@ -248,27 +246,49 @@ public class MatchSameAs<C, D>
      */
     private List<C> resolveSameAsSorted(C start) {
         List<C> result = resolveSameAs(start).collect(Collectors.toCollection(ArrayList::new));
-        Collections.sort(result, sparqlCxt.comparator());
+        Collections.sort(result, this::compare);
         return result;
+    }
+
+    protected int compare(C a, C b) {
+    	MapperX<C, D> mapper = getMapper();
+    	Node aNode = mapper.toNode(a);
+    	Node bNode = mapper.toNode(b);
+    	int result = NodeCmp.compareRDFTerms(aNode, bNode);
+    	return result;
+    }
+
+    protected boolean isLiteral(C c) {
+    	return getMapper().isLiteral(c);
+    }
+
+    // XXX Could be added to mapper; analogous to the already present "isLiteral".
+    protected boolean isConcrete(C c) {
+    	return getMapper().toNode(c).isConcrete();
+    }
+
+    protected C any() {
+    	return getMapper().fromNode(Node.ANY);
     }
 
     /**
      *
-     * @param g
      * @param start
      * @return A stream of unique start's same-as reachable nodes.
      */
     private Iter<C> resolveSameAs(C start) {
-        Traverser<C> traverser = Traverser.forGraph(n -> getDirectNodes(n));
+        // Traverser<C> traverser = Traverser.forGraph(n -> getDirectNodes(n));
         // Note: Traverser always includes the start node in its result
-        Iter<C> result = Iter.iter(traverser.depthFirstPreOrder(start).iterator());
+        // Iter<C> result = Iter.iter(traverser.depthFirstPreOrder(start).iterator());
+    	Iter<C> result = Iter.iter(new IteratorDepthFirstPreOrder<>(start, n -> getDirectNodes(n)));
+
         // result = StreamUtils.viaList(result, list -> System.out.println("resolveSameAs [greaterOrEqual=" + greaterOrEqual + "]: " + start + " -> " + list));
         return result;
     }
 
     private Set<C> getDirectNodes(C start) {
         Set<C> result;
-        result = sparqlCxt.isLiteral(start)
+        result = isLiteral(start)
             ? Collections.emptySet()
             : loadDirectNodes(start);
         return result;
@@ -291,8 +311,12 @@ public class MatchSameAs<C, D>
     private Iter<C> findDirectNodes(C s, C p, boolean isForward) {
     	MapperX<C, D> mapper = getMapper();
         Iter<C> result = isForward
-                ? IterUtils.iter(getDelegate().match(s, p, sparqlCxt.any())).map(mapper::object)
-                : IterUtils.iter(getDelegate().match(sparqlCxt.any(), p, s)).map(mapper::subject);
+                ? iter(getDelegate().match(s, p, any())).map(mapper::object)
+                : iter(getDelegate().match(any(), p, s)).map(mapper::subject);
         return result;
+    }
+
+    private static <T> Iter<T> iter(Stream<T> stream) {
+        return Iter.iter(Iter.onClose(stream.iterator(), stream::close));
     }
 }

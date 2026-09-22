@@ -1,6 +1,5 @@
 package org.aksw.jena.inf.sameas;
 
-import org.aksw.jena.inf.util.SparqlCxtNode;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Triple;
@@ -23,7 +22,7 @@ public class GraphSameAs
 	}
 
     private static Match<Node, Triple> createMatch(Graph graph, ConfigSameAs<Node> setupSameAs) {
-        Match<Node, Triple> match = new MatchSameAs<>(new MatchGraph(graph), SparqlCxtNode.get(),
+        Match<Node, Triple> match = new MatchSameAs<>(new MatchGraph(graph),
             	setupSameAs.sameAsPredicates(), setupSameAs.allowDuplicates(), setupSameAs.mayHaveSameAsLinks());
         return match;
     }

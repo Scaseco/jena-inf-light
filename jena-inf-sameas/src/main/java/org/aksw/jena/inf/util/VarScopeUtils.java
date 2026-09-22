@@ -7,12 +7,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.apache.jena.sparql.ARQConstants;
 import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.engine.Rename;
-
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 
 /**
  * Methods for working with scope levels of SPARQL variables.
@@ -98,9 +97,9 @@ public class VarScopeUtils {
      * @param vars A set of variables with arbitrary scope levels.
      * @return A mapping that normalizes every variable's minimum scope to 0.
      */
-    public static BiMap<Var, Var> normalizeVarScopes(Collection<Var> vars) {
+    public static BidiMap<Var, Var> normalizeVarScopes(Collection<Var> vars) {
         Map<String, Integer> nameToMinLevel = getMinimumScopeLevels(vars);
-        BiMap<Var, Var> result = HashBiMap.create();
+        BidiMap<Var, Var> result = new DualHashBidiMap<>(); // HashBidiMap.create();
         for (Var from : vars) {
             String fromName = from.getName();
             int fromLevel = getScopeLevel(fromName);
@@ -120,11 +119,11 @@ public class VarScopeUtils {
      * In other words, if the minimum scope level among all given variables is 'n' then the returned mapping
      * reduces every scope level by 'n'.
      */
-    public static BiMap<Var, Var> normalizeVarScopesGlobal(Collection<Var> vars) {
+    public static BidiMap<Var, Var> normalizeVarScopesGlobal(Collection<Var> vars) {
         int globalMinScopeLevel = vars.stream().mapToInt(VarScopeUtils::getScopeLevel).min().orElse(0);
 
         // Reduce all scopes by the global min level
-        BiMap<Var, Var> result = HashBiMap.create();
+        BidiMap<Var, Var> result = new DualHashBidiMap<>();
         for (Var from : vars) {
             String fromName = from.getName();
             int fromLevel = getScopeLevel(fromName);

@@ -1,4 +1,4 @@
-package org.aksw.jenax.arq.sameas.assembler;
+package org.aksw.jena.inf.sameas.assembler;
 
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;

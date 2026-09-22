@@ -1,4 +1,4 @@
-package org.aksw.jenax.arq.sameas;
+package org.aksw.jena.inf.sameas;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -13,7 +13,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import org.aksw.jena.inf.rdfs.DatasetGraphRDFSReduced;
-import org.aksw.jenax.arq.uniondefaultgraph.assembler.DatasetGraphUnionDefaultGraph;
+import org.aksw.jena.inf.uniondefaultgraph.DatasetGraphUnionDefaultGraph;
+import org.apache.commons.collections4.IteratorUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.apache.jena.atlas.iterator.Iter;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Node;
@@ -46,10 +49,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import com.google.common.base.Stopwatch;
-import com.google.common.collect.Iterators;
-import com.google.common.io.MoreFiles;
 
 public class TestDatasetAssemblerSameAs {
 
@@ -151,7 +150,7 @@ public class TestDatasetAssemblerSameAs {
     }
 
     public static  Dataset experiment01Impl(Dataset dataset) {
-        Stopwatch sw = Stopwatch.createStarted();
+        StopWatch sw = StopWatch.createStarted();
 
         // DatasetGraph base = DatasetGraphFactory.create();
         System.out.println("Starting loading of data...");
@@ -191,12 +190,13 @@ public class TestDatasetAssemblerSameAs {
 //          RDFDataMgr.read(dataset, "/home/raven/Datasets/coypu/countries-deu.nt");
 //          RDFDataMgr.read(dataset, "/home/raven/Datasets/coypu/countries-deu-wikidata.nt");
 //          RDFDataMgr.read(dataset, "/home/raven/Datasets/coypu/countries-deu-link.nt");
-            System.out.println("Finished loading of " + quadCount + " quads in " + sw.elapsed(TimeUnit.SECONDS));
+            System.out.println("Finished loading of " + quadCount + " quads in " + sw.getTime(TimeUnit.SECONDS));
         });
 
         for (int x = 0; x < 1; ++x) {
             System.out.println("Starting retrieval...");
-            sw.reset().start();
+            sw.reset();
+            sw.start();
             DatasetGraph dsg = dataset.asDatasetGraph(); // DatasetGraphSameAs.wrap(base);
             Txn.executeRead(dsg,() -> {
                 Iterator<Quad> it = dsg.find(Node.ANY, Node.ANY, Node.ANY, Node.ANY);
@@ -218,14 +218,14 @@ public class TestDatasetAssemblerSameAs {
                     }
 
                     if (i % 1000000 == 0) {
-                        System.out.println("Current count: " + i + " elapsed: " + sw.elapsed(TimeUnit.SECONDS));
+                        System.out.println("Current count: " + i + " elapsed: " + sw.getTime(TimeUnit.SECONDS));
                     }
                 }
-                System.out.println("Current count: " + i + " elapsed: " + sw.elapsed(TimeUnit.SECONDS));
+                System.out.println("Current count: " + i + " elapsed: " + sw.getTime(TimeUnit.SECONDS));
                 Iter.close(it);
             });
         }
-        System.out.println("Finished action in " + sw.elapsed(TimeUnit.SECONDS));
+        System.out.println("Finished action in " + sw.getTime(TimeUnit.SECONDS));
         return dataset;
     }
 
@@ -244,7 +244,7 @@ public class TestDatasetAssemblerSameAs {
                     // ResultSetFormatter.outputAsTSV(System.out, rs); rs.reset();
                     r = ResultSetFormatter.consume(rs);
                 } else if (query.isConstructType()) {
-                    r = Iterators.size(qe.execConstructQuads());
+                    r = IteratorUtils.size(qe.execConstructQuads());
                 } else {
                     throw new RuntimeException("Unsupported query type");
                 }
@@ -317,7 +317,7 @@ public class TestDatasetAssemblerSameAs {
 	    	}
     	} finally {
 	    	if (tdb2TmpFolder != null) {
-    			MoreFiles.deleteRecursively(tdb2TmpFolder);
+    			FileUtils.deleteDirectory(tdb2TmpFolder.toFile());
 	    	}
     	}
     }
