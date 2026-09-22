@@ -45,7 +45,6 @@ public class DatasetAssemblerRdfsReducedEnable extends DatasetAssembler {
         Graph schema = RDFDataMgr.loadGraph(schemaFile);
         ConfigRDFS<Node> setup = RDFSFactory.setupRDFS(schema);
         base.getContext().set(DatasetAssemblerRdfsReduced.symSetupRdfsNode, setup);
-
         return base;
     }
 }

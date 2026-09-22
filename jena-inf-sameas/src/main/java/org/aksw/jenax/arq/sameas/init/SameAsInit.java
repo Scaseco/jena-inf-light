@@ -4,15 +4,15 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.aksw.jena.inf.rdfs.DatasetGraphRDFSReduced;
+import org.aksw.jena.inf.sameas.DatasetGraphSameAs;
 import org.aksw.jenax.arq.sameas.assembler.DatasetAssemblerRdfsReduced;
 import org.aksw.jenax.arq.sameas.assembler.DatasetAssemblerRdfsReducedEnable;
 import org.aksw.jenax.arq.sameas.assembler.DatasetAssemblerSameAs;
 import org.aksw.jenax.arq.sameas.assembler.SameAsVocab;
 import org.aksw.jenax.arq.uniondefaultgraph.assembler.DatasetAssemblerUnionDefaultGraph;
+import org.aksw.jenax.arq.uniondefaultgraph.assembler.DatasetGraphUnionDefaultGraph;
 import org.aksw.jenax.arq.uniondefaultgraph.assembler.UnionDefaultGraphVocab;
-import org.aksw.jenax.arq.util.dataset.DatasetGraphRDFSReduced;
-import org.aksw.jenax.arq.util.dataset.DatasetGraphSameAs;
-import org.aksw.jenax.arq.util.dataset.DatasetGraphUnionDefaultGraph;
 import org.apache.jena.assembler.Assembler;
 import org.apache.jena.assembler.assemblers.AssemblerGroup;
 import org.apache.jena.graph.Node;
@@ -39,7 +39,6 @@ public class SameAsInit
     }
 
     public static void init() {
-        // JenaPluginUtils.registerResourceClasses(SameAsConfig.class);
         registerWith(Assembler.general());
 
         registerServiceWrapper("sameAs", execCxt ->
@@ -52,7 +51,7 @@ public class SameAsInit
             // Objects.requireNonNull(setup, "No RDFS setup found in the active dataset context");
             SetupRDFS setup = execCxt.getContext().get(DatasetAssemblerRdfsReduced.symSetupRdfsNode);
             if (setup != null) {
-                r  = DatasetGraphRDFSReduced.wrap(r, setup);
+            	r = DatasetGraphRDFSReduced.wrap(r, setup);
             }
             return r;
         });
@@ -63,7 +62,7 @@ public class SameAsInit
             DatasetGraph r = execCxt.getDataset();
             r = DatasetGraphUnionDefaultGraph.wrapIfNeeded(r);
             if (setup != null) {
-                r = DatasetGraphRDFSReduced.wrap(r, setup);
+            	r = DatasetGraphRDFSReduced.wrap(r, setup);
             }
             return r;
         });

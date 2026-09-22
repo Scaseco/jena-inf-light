@@ -12,9 +12,8 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import org.aksw.jenax.arq.util.dataset.DatasetGraphRDFSReduced;
-import org.aksw.jenax.arq.util.dataset.DatasetGraphSameAs;
-import org.aksw.jenax.arq.util.dataset.DatasetGraphUnionDefaultGraph;
+import org.aksw.jena.inf.rdfs.DatasetGraphRDFSReduced;
+import org.aksw.jenax.arq.uniondefaultgraph.assembler.DatasetGraphUnionDefaultGraph;
 import org.apache.jena.atlas.iterator.Iter;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Node;
@@ -43,7 +42,6 @@ import org.apache.jena.sparql.sse.SSE;
 import org.apache.jena.sys.JenaSystem;
 import org.apache.jena.system.Txn;
 import org.apache.jena.tdb2.assembler.VocabTDB2;
-import org.apache.jena.vocabulary.OWL;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -99,23 +97,22 @@ public class TestDatasetAssemblerSameAs {
         Assertions.assertEquals(4, actual);
     }
 
-    @Test
-    public void test04() {
-        Graph baseGraph = SSE.parseGraph("(graph (:x rdfs:label 'x') (:y rdfs:label 'y') (:x owl:sameAs :y) (:a rdfs:label 'a') )");
-        DatasetGraph baseDs = DatasetGraphFactory.wrap(baseGraph);
-        DatasetGraph ds = DatasetGraphSameAs.wrapWithTable(baseDs, OWL.sameAs.asNode(), false);
-
-        // ds.find().forEachRemaining(System.out::println);
-    }
+//    @Test
+//    public void test04() {
+//        Graph baseGraph = SSE.parseGraph("(graph (:x rdfs:label 'x') (:y rdfs:label 'y') (:x owl:sameAs :y) (:a rdfs:label 'a') )");
+//        DatasetGraph baseDs = DatasetGraphFactory.wrap(baseGraph);
+//        DatasetGraph ds = DatasetGraphSameAs.wrapWithTable(baseDs, OWL.sameAs.asNode(), false);
+//
+//        // ds.find().forEachRemaining(System.out::println);
+//    }
 
     // @Test
     public void experiment01() {
         experiment01Impl(ds1);
 
         Dataset ds2 = experiment01Impl(DatasetFactory.wrap(DatasetGraphRDFSReduced.wrap(
-                DatasetGraphSameAs.wrapWithTable(
                 DatasetGraphUnionDefaultGraph.wrap(
-                DatasetGraphFactory.createTxnMem())),
+                DatasetGraphFactory.createTxnMem()),
                 RDFDataMgr.loadGraph("/home/raven/Datasets/coypu/coy-ontology.ttl"))));
 
         boolean computeDiff = false;
@@ -180,7 +177,8 @@ public class TestDatasetAssemblerSameAs {
 //                            continue;
 //                        }
 
-                        if (false && dsg.contains(quad)) {
+                        boolean validate = false;
+                        if (validate && dsg.contains(quad)) {
                             System.out.println("Duplicate detected on insert: " + quad);
                         }
 

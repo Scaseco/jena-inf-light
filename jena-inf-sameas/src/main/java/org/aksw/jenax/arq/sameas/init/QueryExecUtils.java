@@ -3,8 +3,8 @@ package org.aksw.jenax.arq.sameas.init;
 import java.util.Map;
 import java.util.Set;
 
+import org.aksw.jena.inf.util.DynamicDatasetUtils;
 import org.aksw.jena.inf.util.VarScopeUtils;
-import org.aksw.jenax.arq.util.dataset.DynamicDatasetUtils;
 import org.apache.jena.atlas.lib.Pair;
 import org.apache.jena.query.Query;
 import org.apache.jena.sparql.algebra.Op;
