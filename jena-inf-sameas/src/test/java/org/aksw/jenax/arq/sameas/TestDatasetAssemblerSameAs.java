@@ -94,6 +94,7 @@ public class TestDatasetAssemblerSameAs {
         });
         // dsg.stream(null, null, null, null).forEach(System.out::println);
         long actual = dsg.stream(null, null, null, null).count();
+        // long actual = dsg.stream().count();
         Assertions.assertEquals(4, actual);
     }
 

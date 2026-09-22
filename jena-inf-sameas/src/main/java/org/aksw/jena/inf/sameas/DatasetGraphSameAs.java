@@ -2,11 +2,14 @@ package org.aksw.jena.inf.sameas;
 
 import java.util.Collections;
 import java.util.Set;
+import java.util.stream.Stream;
 
+import org.apache.jena.atlas.iterator.Iter;
 import org.apache.jena.graph.Node;
 import org.apache.jena.rdfs.engine.DatasetGraphWithGraphTransform;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.core.DatasetGraphWrapperView;
+import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.util.Context;
 import org.apache.jena.vocabulary.OWL;
 
@@ -23,6 +26,16 @@ public class DatasetGraphSameAs extends DatasetGraphWithGraphTransform implement
     public ConfigSameAs<Node> getConfig() {
 		return config;
 	}
+
+    @Override // TODO Needs to become part of DatasetGraphWithGraphTransform
+    public Stream<Quad> stream(Node g, Node s, Node p, Node o) {
+    	return Iter.asStream(getR().find(g, s, p, o));
+    }
+
+    @Override // TODO Needs to become part of DatasetGraphWithGraphTransform
+    public Stream<Quad> stream() {
+    	return Iter.asStream(getR().find());
+    }
 
     public DatasetGraphSameAs(DatasetGraph dsg, ConfigSameAs<Node> config, Context cxt) {
         super(dsg, cxt, g -> new GraphSameAs(g, config));

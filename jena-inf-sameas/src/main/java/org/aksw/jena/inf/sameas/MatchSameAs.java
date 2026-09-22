@@ -228,7 +228,7 @@ public class MatchSameAs<C, D>
                 // Note: We can either create the cross product between subjects and objects
                 // Or we e.g. lookup the os for a subjects and find the least one within the objects
                 // We could add a threshold to the cross product size as when to resort to graph lookups instead.
-                if (super.contains(s, p, o)) {
+                if (getDelegate().contains(s, p, o)) {
                     result = mapper.tuple(s, p, o);
                     break outer;
                 }
@@ -291,8 +291,8 @@ public class MatchSameAs<C, D>
     private Iter<C> findDirectNodes(C s, C p, boolean isForward) {
     	MapperX<C, D> mapper = getMapper();
         Iter<C> result = isForward
-                ? IterUtils.iter(super.match(s, p, sparqlCxt.any())).map(mapper::object)
-                : IterUtils.iter(super.match(sparqlCxt.any(), p, s)).map(mapper::subject);
+                ? IterUtils.iter(getDelegate().match(s, p, sparqlCxt.any())).map(mapper::object)
+                : IterUtils.iter(getDelegate().match(sparqlCxt.any(), p, s)).map(mapper::subject);
         return result;
     }
 }

@@ -1,11 +1,13 @@
 package org.aksw.jena.inf.reduced;
 
-import org.aksw.jena.inf.sameas.ConfigSameAs;
-import org.aksw.jena.inf.sameas.GraphSameAs;
+import java.util.stream.Stream;
+
+import org.apache.jena.atlas.iterator.Iter;
 import org.apache.jena.graph.Node;
 import org.apache.jena.rdfs.engine.DatasetGraphWithGraphTransform;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.core.DatasetGraphWrapperView;
+import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.sparql.util.Context;
 
 public class DatasetGraphReduced extends DatasetGraphWithGraphTransform implements DatasetGraphWrapperView {
@@ -17,12 +19,22 @@ public class DatasetGraphReduced extends DatasetGraphWithGraphTransform implemen
         this.cacheMaxSize = cacheMaxSize;
     }
 
-    public DatasetGraphReduced(DatasetGraph dsg, long cacheMaxSize, ConfigSameAs<Node> setup, Context cxt) {
-        super(dsg, cxt, g -> new GraphSameAs(g, setup));
+    public DatasetGraphReduced(DatasetGraph dsg, long cacheMaxSize, Context cxt) {
+        super(dsg, cxt, g -> new GraphReduced(g, cacheMaxSize));
         this.cacheMaxSize = cacheMaxSize;
     }
 
     public long getCacheMaxSize() {
 		return cacheMaxSize;
 	}
+
+    @Override // TODO Needs to become part of DatasetGraphWithGraphTransform
+    public Stream<Quad> stream(Node g, Node s, Node p, Node o) {
+    	return Iter.asStream(getR().find(g, s, p, o));
+    }
+
+    @Override // TODO Needs to become part of DatasetGraphWithGraphTransform
+    public Stream<Quad> stream() {
+    	return Iter.asStream(getR().find());
+    }
 }
