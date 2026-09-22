@@ -21,7 +21,6 @@ public abstract class DatasetGraphWrapperFindBase
     }
 
     /**
-     * @implNote
      * The decision not to use Quad as the parameter type is to allow for more
      * succinct implementations by avoiding the need to call quad.getX() for the components.
      *
