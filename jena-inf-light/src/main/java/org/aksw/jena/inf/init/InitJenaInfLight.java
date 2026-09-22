@@ -26,7 +26,7 @@ import org.apache.jena.sparql.engine.QueryIterator;
 import org.apache.jena.sparql.service.ServiceExecutorRegistry;
 import org.apache.jena.sys.JenaSubsystemLifecycle;
 
-public class SameAsInit
+public class InitJenaInfLight
     implements JenaSubsystemLifecycle
 {
     @Override

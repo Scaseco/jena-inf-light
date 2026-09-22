@@ -39,7 +39,7 @@
 		</developer>
 	</developers>
 	<modules>
-		<module>jena-inf-sameas</module>
+		<module>jena-inf-light</module>
 		<module>jena-inf-bom</module>
 		<module>jena-inf-pkg-fuseki-plugin</module>
 	</modules>
@@ -90,36 +90,6 @@
 				<type>pom</type>
 			</dependency>
 
-<!--					<dependency>-->
-<!--			<groupId>org.apache.logging.log4j</groupId>-->
-<!--			<artifactId>log4j-slf4j2-impl</artifactId>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
-
-			<dependency>
-				<groupId>org.apache.jena</groupId>
-				<artifactId>jena-arq</artifactId>
-				<version>${jena.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.jena</groupId>
-				<artifactId>jena-fuseki-main</artifactId>
-				<version>${jena.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.jena</groupId>
-				<artifactId>jena-fuseki-server</artifactId>
-				<version>${jena.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.jena</groupId>
-				<artifactId>jena-tdb2</artifactId>
-				<version>${jena.version}</version>
-			</dependency>
-
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-bom</artifactId>
@@ -138,7 +108,7 @@
 
 			<dependency>
 				<groupId>org.aksw.jena.inf</groupId>
-				<artifactId>jena-inf-sameas</artifactId>
+				<artifactId>jena-inf-light</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>jena-inf-sameas</artifactId>
-	<name>jena-inf-sameas</name>
+	<artifactId>jena-inf-light</artifactId>
+	<name>Jena Inf - Light</name>
 	<packaging>jar</packaging>
 
 	<parent>
@@ -38,12 +38,5 @@
 			<artifactId>log4j-slf4j2-impl</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<!--		<dependency>-->
-		<!--			<groupId>org.slf4j</groupId>-->
-		<!--			<artifactId>slf4j-log4j12</artifactId>-->
-		<!--<version>2.0.17</version>-->
-		<!--			<scope>test</scope>-->
-		<!--		</dependency>-->
 	</dependencies>
 </project>

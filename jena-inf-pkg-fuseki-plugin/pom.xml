@@ -18,7 +18,7 @@
   <dependencies>
     <dependency>
       <groupId>org.aksw.jena.inf</groupId>
-      <artifactId>jena-inf-sameas</artifactId>
+      <artifactId>jena-inf-light</artifactId>
     </dependency>
 
     <dependency>
