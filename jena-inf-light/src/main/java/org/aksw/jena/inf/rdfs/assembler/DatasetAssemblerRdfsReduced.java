@@ -2,8 +2,8 @@ package org.aksw.jena.inf.rdfs.assembler;
 
 import static org.apache.jena.sparql.util.graph.GraphUtils.getAsStringValue;
 
+import org.aksw.jena.inf.init.JenaInfLightTerms;
 import org.aksw.jena.inf.rdfs.DatasetGraphRDFSReduced;
-import org.aksw.jena.inf.sameas.assembler.SameAsTerms;
 import org.apache.jena.assembler.Assembler;
 import org.apache.jena.assembler.exceptions.AssemblerException;
 import org.apache.jena.graph.Graph;
@@ -29,7 +29,7 @@ public class DatasetAssemblerRdfsReduced extends DatasetAssembler {
     // Symbol for putting the RDFS T-BOX into a dataset's context (for Nodes rather than NodeIDs)
     public static final Symbol symSetupRdfsNode = SystemARQ.allocSymbol("setupRdfsNode");
 
-    public static final Resource TYPE = ResourceFactory.createResource(SameAsTerms.NS + "DatasetRDFS");
+    public static final Resource TYPE = ResourceFactory.createResource(JenaInfLightTerms.NS + "DatasetRDFS");
 
     public static Resource getType() {
         return TYPE;

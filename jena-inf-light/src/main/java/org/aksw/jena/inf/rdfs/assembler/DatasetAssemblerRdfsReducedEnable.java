@@ -2,7 +2,7 @@ package org.aksw.jena.inf.rdfs.assembler;
 
 import static org.apache.jena.sparql.util.graph.GraphUtils.getAsStringValue;
 
-import org.aksw.jena.inf.sameas.assembler.SameAsTerms;
+import org.aksw.jena.inf.init.JenaInfLightTerms;
 import org.apache.jena.assembler.Assembler;
 import org.apache.jena.assembler.exceptions.AssemblerException;
 import org.apache.jena.graph.Graph;
@@ -27,7 +27,7 @@ import org.apache.jena.sparql.core.assembler.DatasetAssembler;
  */
 public class DatasetAssemblerRdfsReducedEnable extends DatasetAssembler {
 
-    public static final Resource TYPE = ResourceFactory.createResource(SameAsTerms.NS + "DatasetRDFSEnabled");
+    public static final Resource TYPE = ResourceFactory.createResource(JenaInfLightTerms.NS + "DatasetRDFSEnabled");
 
     public static Resource getType() {
         return TYPE;
