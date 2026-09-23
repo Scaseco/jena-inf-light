@@ -7,6 +7,7 @@ import org.aksw.jena.inf.rdfs.DatasetGraphRDFSReduced;
 import org.apache.jena.assembler.Assembler;
 import org.apache.jena.assembler.exceptions.AssemblerException;
 import org.apache.jena.graph.Graph;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdfs.RDFSFactory;
@@ -17,6 +18,7 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.sparql.SystemARQ;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.core.assembler.DatasetAssembler;
+import org.apache.jena.sparql.util.Context;
 import org.apache.jena.sparql.util.Symbol;
 
 /**
@@ -35,6 +37,24 @@ public class DatasetAssemblerRdfsReduced extends DatasetAssembler {
         return TYPE;
     }
 
+    public static Context setRdfs(Context context, Model model) {
+    	return setRdfs(context, model.getGraph());
+    }
+
+    public static Context setRdfs(Context context, Graph graph) {
+        SetupRDFS config = RDFSFactory.setupRDFS(graph);
+    	return setRdfs(context, config);
+    }
+
+    public static Context setRdfs(Context context, SetupRDFS config) {
+    	context.set(symSetupRdfsNode, config);
+    	return context;
+    }
+
+    public static SetupRDFS getRdfs(Context context) {
+    	return context != null ? context.get(symSetupRdfsNode) : null;
+    }
+
     @Override
     public DatasetGraph createDataset(Assembler a, Resource root) {
 
@@ -47,6 +67,7 @@ public class DatasetAssemblerRdfsReduced extends DatasetAssembler {
             throw new AssemblerException(root, "Required property missing: "+VocabRDFS.pRdfsSchemaFile) ;
 
         Graph schema = RDFDataMgr.loadGraph(schemaFile);
+        setRdfs(base.getContext(), schema);
         SetupRDFS config = RDFSFactory.setupRDFS(schema);
         base.getContext().set(symSetupRdfsNode, config);
         DatasetGraph dsg = DatasetGraphRDFSReduced.wrap(base, config);

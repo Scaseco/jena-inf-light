@@ -50,7 +50,7 @@ public class InitJenaInfLight
             r = DatasetGraphUnionDefaultGraph.wrapIfNeeded(r);
             r = DatasetGraphSameAs.wrap(r);
             // Objects.requireNonNull(setup, "No RDFS setup found in the active dataset context");
-            SetupRDFS setup = execCxt.getContext().get(DatasetAssemblerRdfsReduced.symSetupRdfsNode);
+            SetupRDFS setup = DatasetAssemblerRdfsReduced.getRdfs(execCxt.getContext());
             if (setup != null) {
             	r = DatasetGraphRDFSReduced.wrap(r, setup);
             }

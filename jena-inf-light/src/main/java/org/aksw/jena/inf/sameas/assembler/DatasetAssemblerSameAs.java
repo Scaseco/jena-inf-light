@@ -22,7 +22,7 @@ public class DatasetAssemblerSameAs
     @Override
     public DatasetGraph createDataset(Assembler a, Resource root) {
         Resource baseDatasetRes = root.getPropertyResourceValue(DatasetAssemblerVocab.pDataset);
-        Objects.requireNonNull(baseDatasetRes, "No ja:baseDataset specified on " + root);
+        Objects.requireNonNull(baseDatasetRes, "No ja:dataset specified on " + root);
         Object obj = a.open(baseDatasetRes);
 
         boolean allowDuplicates = Optional.ofNullable(root.getProperty(SameAsVocab.allowDuplicates)).map(Statement::getBoolean).orElse(false);

@@ -29,12 +29,12 @@ public class DatasetGraphSameAs extends DatasetGraphWithGraphTransform implement
 
     @Override // TODO Needs to become part of DatasetGraphWithGraphTransform
     public Stream<Quad> stream(Node g, Node s, Node p, Node o) {
-    	return Iter.asStream(getR().find(g, s, p, o));
+    	return Iter.asStream(find(g, s, p, o));
     }
 
     @Override // TODO Needs to become part of DatasetGraphWithGraphTransform
     public Stream<Quad> stream() {
-    	return Iter.asStream(getR().find());
+    	return Iter.asStream(find());
     }
 
     public DatasetGraphSameAs(DatasetGraph dsg, ConfigSameAs<Node> config, Context cxt) {

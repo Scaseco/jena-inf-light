@@ -112,11 +112,13 @@
           <artifactId>jena-arq</artifactId>
           <scope>provided</scope>
         </dependency>
+        <!--
         <dependency>
           <groupId>org.apache.jena</groupId>
           <artifactId>jena-fuseki-main</artifactId>
           <scope>provided</scope>
         </dependency>
+        -->
       </dependencies>
       <build>
         <plugins>
@@ -215,3 +217,4 @@
     </profile>
   </profiles>
 </project>
+

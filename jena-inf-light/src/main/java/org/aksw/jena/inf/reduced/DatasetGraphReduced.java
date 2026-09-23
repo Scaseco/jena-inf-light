@@ -30,11 +30,11 @@ public class DatasetGraphReduced extends DatasetGraphWithGraphTransform implemen
 
     @Override // TODO Needs to become part of DatasetGraphWithGraphTransform
     public Stream<Quad> stream(Node g, Node s, Node p, Node o) {
-    	return Iter.asStream(getR().find(g, s, p, o));
+    	return Iter.asStream(find(g, s, p, o));
     }
 
     @Override // TODO Needs to become part of DatasetGraphWithGraphTransform
     public Stream<Quad> stream() {
-    	return Iter.asStream(getR().find());
+    	return Iter.asStream(find());
     }
 }

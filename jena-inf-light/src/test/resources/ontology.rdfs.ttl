@@ -1,0 +1,16 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+foaf:topic_interest
+  a rdf:Property, owl:ObjectProperty ;
+  rdfs:comment "A thing of interest to this person." ;
+  rdfs:domain foaf:Agent ;
+  rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> ;
+  rdfs:label "topic_interest" ;
+  rdfs:range owl:Thing ;
+  vs:term_status "testing" ;
+  .
+
